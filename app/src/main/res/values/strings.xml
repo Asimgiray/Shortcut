@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Shortcut</string>
+    <string name="home_label">Home</string>
+    <string name="search_label">Search</string>
+    <string name="profile_label">Profile</string>
+    <string name="message_label">Messages</string>
+</resources>
