@@ -38,6 +38,7 @@
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
         </activity>
+
     </application>
 
 </manifest>

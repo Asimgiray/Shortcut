@@ -17,30 +17,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        val shortcutManager = getSystemService(ShortcutManager::class.java)
-
-        val intent = Intent(this, SearchActivity::class.java)
-        intent.action = Intent.ACTION_VIEW
-
-
-        val sampleShortcut = ShortcutInfo.Builder(applicationContext,"Search")
-        .setShortLabel(getString(R.string.search_label))
-        .setIcon(Icon.createWithResource(applicationContext,R.drawable.icon_search))
-        .setIntent(intent)
-        .build()
-
-
-        val executor: ExecutorService = Executors.newSingleThreadExecutor()
-        val handler = Handler(Looper.getMainLooper())
-
-        executor.execute(Runnable {
-            shortcutManager.dynamicShortcuts = listOf(sampleShortcut)
-            handler.post(Runnable {
-                //UI Thread work here
-            })
-        })
-
+        addShortcut()
     }
 
     fun homeClicked(view: View) {
@@ -54,5 +31,30 @@ class MainActivity : AppCompatActivity() {
     }
     fun searchClicked(view: View) {
         startActivity(Intent(this, SearchActivity::class.java))
+    }
+
+    fun addShortcut() {
+
+        val shortcutManager = getSystemService(ShortcutManager::class.java)
+
+        val intent = Intent(this, SearchActivity::class.java)
+        intent.action = Intent.ACTION_VIEW
+
+
+        val sampleShortcut = ShortcutInfo.Builder(applicationContext,"Search")
+            .setShortLabel(getString(R.string.search_label))
+            .setIcon(Icon.createWithResource(applicationContext,R.drawable.icon_search))
+            .setIntent(intent)
+            .build()
+
+
+        val executor: ExecutorService = Executors.newSingleThreadExecutor()
+        val handler = Handler(Looper.getMainLooper())
+
+        executor.execute {
+            shortcutManager.dynamicShortcuts = listOf(sampleShortcut)
+            handler.post { }
+        }
+
     }
 }
